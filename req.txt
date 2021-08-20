@@ -1,0 +1,5 @@
+websocket-client
+websockets
+flask
+typing
+requests_oauthlib
