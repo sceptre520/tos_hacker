@@ -108,6 +108,7 @@ def saveStock(dict):
                 val = val + ', '
             col = col + x
             val = val + "'" + str(dict[x]) + "'"
+        print("INSERT INTO stock({col}) VALUES ({val});".format(col=col,val=val))
         cursor.execute("INSERT INTO stock({col}) VALUES ({val});".format(col=col,val=val))
         ret = cursor.lastrowid
     else:
@@ -116,6 +117,7 @@ def saveStock(dict):
             if set_str != '':
                 set_str = set_str + ', '
             set_str = set_str + x + "='" + str(dict[x]) + "'"
+        print("UPDATE stock SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
         cursor.execute("UPDATE stock SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
         ret = rows[0][0]
     connection.commit()
