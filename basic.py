@@ -17,8 +17,8 @@ def getOneStock(symbol):
         'includeQuotes': True,
     }
     option_chains = TDSession.get_options_chain(option_chain=opt_chain)
-    stock_id = db_conn.saveStock(option_chains['underlying'])
     print(option_chains['underlying'])
+    stock_id = db_conn.saveStock(option_chains['underlying'])
     # ret_symbol = option_chains['underlying']
     # print(ret_symbol)
     for y in option_chains['callExpDateMap']:
