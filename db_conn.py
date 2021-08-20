@@ -107,9 +107,7 @@ def saveStock(dict):
             if val != '':
                 val = val + ', '
             col = col + x
-            string = str(dict[x])
-            string = string.replace("'", '\'')
-            val = val + "\'" + string + "\'"
+            val = val + '"' + str(dict[x]) + '"'
         print("INSERT INTO stock({col}) VALUES ({val});".format(col=col,val=val))
         cursor.execute("INSERT INTO stock({col}) VALUES ({val});".format(col=col,val=val))
         ret = cursor.lastrowid
@@ -118,9 +116,7 @@ def saveStock(dict):
         for x in dict:
             if set_str != '':
                 set_str = set_str + ', '
-            string = str(dict[x])
-            string = string.replace("'", '\'')
-            set_str = set_str + x + "=\'" + string + "\'"
+            set_str = set_str + x + '="' + str(dict[x]) + '"'
         print("UPDATE stock SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
         cursor.execute("UPDATE stock SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
         ret = rows[0][0]
@@ -140,10 +136,8 @@ def saveOption(stock_id, dict):
                 tmp_val = 'x'
             else:
                 tmp_val = str(dict[x])
-            tmp_val = str(dict[x])
-            tmp_val = tmp_val.replace("'", '\'')
             col = col + ', ' + x
-            val = val + ', ' + "\'" + tmp_val + "\'"
+            val = val + ', ' + '"' + tmp_val + '"'
         cursor.execute("INSERT INTO options({col}) VALUES ({val});".format(col=col,val=val))
     else:
         set_str = 'symbol_id='+str(stock_id)
@@ -152,8 +146,6 @@ def saveOption(stock_id, dict):
                 tmp_val = 'x'
             else:
                 tmp_val = str(dict[x])
-            tmp_val = str(dict[x])
-            tmp_val = tmp_val.replace("'", '\'')
-            set_str = set_str + ', '  + x + "=\'" + tmp_val + "\'"
+            set_str = set_str + ', '  + x + '="' + tmp_val + '"'
         cursor.execute("UPDATE options SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
     connection.commit()
