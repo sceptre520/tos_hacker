@@ -132,12 +132,20 @@ def saveOption(stock_id, dict):
         col = 'symbol_id'
         val = str(stock_id)
         for x in dict:
+            if x == 'optionDeliverablesList':
+                tmp_val = 'x'
+            else:
+                tmp_val = str(dict[x])
             col = col + ', ' + x
-            val = val + ', ' + "'" + str(dict[x]) + "'"
+            val = val + ', ' + "'" + tmp_val + "'"
         cursor.execute("INSERT INTO options({col}) VALUES ({val});".format(col=col,val=val))
     else:
         set_str = 'symbol_id='+str(stock_id)
         for x in dict:
-            set_str = set_str + ', '  + x + "='" + str(dict[x]) + "'"
+            if x == 'optionDeliverablesList':
+                tmp_val = 'x'
+            else:
+                tmp_val = str(dict[x])
+            set_str = set_str + ', '  + x + "='" + tmp_val + "'"
         cursor.execute("UPDATE options SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
     connection.commit()

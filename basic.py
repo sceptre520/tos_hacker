@@ -25,7 +25,7 @@ def getOneStock(symbol):
     for y in option_chains['callExpDateMap']:
         k = option_chains['callExpDateMap'][y]
         for z in k:
-            print(k[z][0])
+            # print(k[z][0])
             if k[z][0] is not None:
                 db_conn.saveOption(stock_id, k[z][0])
 
