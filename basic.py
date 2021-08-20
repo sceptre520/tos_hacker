@@ -22,6 +22,7 @@ def getOneStock(symbol):
         stock_id = db_conn.saveStock(option_chains['underlying'])
     # ret_symbol = option_chains['underlying']
     # print(ret_symbol)
+    print(option_chains['callExpDateMap'])
     for y in option_chains['callExpDateMap']:
         k = option_chains['callExpDateMap'][y]
         for z in k:
