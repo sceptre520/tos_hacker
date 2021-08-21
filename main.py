@@ -1,3 +1,4 @@
+import os
 import sys
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QWidget, QAction, 
                             QTableWidget, QTableWidgetItem, QGridLayout, QVBoxLayout, QHBoxLayout,
@@ -6,6 +7,11 @@ from PyQt5.QtGui import QPalette, QColor, QIcon
 from PyQt5.QtCore import Qt, QTimer, pyqtSlot
 
 import db_conn
+import basic
+from threading import Thread, Event
+
+event = Event()
+t2 = Thread(target=basic.catchData, args=(event, ))
 
 class App(QWidget):
     filterV = {
@@ -239,6 +245,11 @@ class App(QWidget):
     def export(self):
         pass
 
+    def closeEvent(self, evt):
+        print('-------------exit---------')
+        event.set()
+        os._exit(1)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
@@ -248,5 +259,8 @@ if __name__ == '__main__':
     qp.setColor(QPalette.Window, QColor(37, 90, 130))
     qp.setColor(QPalette.Button, Qt.gray)
     app.setPalette(qp)
+
+    # t2.start()
+
     ex = App()
     sys.exit(app.exec_())

@@ -153,7 +153,70 @@ def saveOption(stock_id, dict):
 def scanData(filterV):
     connection = sqlite3.connect(dbName)
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM options LIMIT 1000;")
+    where = ''
+    if filterV['lastmin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'a.last>=' + filterV['lastmin']
+    if filterV['lastmax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'a.last<=' + filterV['lastmax']
+    if filterV['volumemin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'a.totalVolume>=' + filterV['volumemin']
+    if filterV['volumemax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'a.totalVolume<=' + filterV['volumemax']
+    
+    if filterV['openinterestmin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.openInterest>=' + filterV['openinterestmin']
+    if filterV['openinterestmax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.openInterest<=' + filterV['openinterestmax']
+    if filterV['optionvolumemin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.totalVolume>=' + filterV['optionvolumemin']
+    if filterV['optionvolumemax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.totalVolume<=' + filterV['optionvolumemax']
+    
+    if filterV['dtemin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.daysToExpiration>=' + filterV['dtemin']
+    if filterV['dtemax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.daysToExpiration<=' + filterV['dtemax']
+    if filterV['optLastmin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.last>=' + filterV['optLastmin']
+    if filterV['optLastmax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.last<=' + filterV['optLastmax']
+    if filterV['optDeltamin'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.delta>=' + filterV['optDeltamin']
+    if filterV['optDeltamax'] != '':
+        if where != '':
+            where = where + ' AND '
+        where = where + 'b.delta<=' + filterV['optDeltamax']
+    
+    if where != '':
+        where = " WHERE " + where
+
+    cursor.execute("SELECT b.* FROM options b LEFT JOIN stock a ON b.symbol_id=a.id {where} LIMIT 1000;".format(where=where))
     rows = cursor.fetchall()
     ret = []
     for row in rows:

@@ -30,7 +30,7 @@ def getOneStock(symbol):
                 db_conn.saveOption(stock_id, k[z][0])
 
 
-def catchData():
+def catchData(event):
     symbols = []
     with open('std.csv', 'r') as file:
         reader = csv.reader(file)
@@ -58,11 +58,11 @@ def catchData():
     print(index)
     
     lenv = len(symbols)
-    while(True):
+    while event.is_set() == False:
         cur_symbol = symbols[index]
 
         print(cur_symbol)
-        getOneStock(cur_symbol)
+        # getOneStock(cur_symbol)
 
         fileh = open("call.log","w+")
         fileh.flush()
@@ -71,6 +71,3 @@ def catchData():
         index = index + 1
         index = index % lenv
         sleep(1)
-
-
-catchData()
