@@ -149,3 +149,26 @@ def saveOption(stock_id, dict):
             set_str = set_str + ', '  + x + '="' + tmp_val + '"'
         cursor.execute("UPDATE options SET {set_str} WHERE id={id};".format(set_str=set_str,id=rows[0][0]))
     connection.commit()
+
+def scanData(filterV):
+    connection = sqlite3.connect(dbName)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM options LIMIT 1000;")
+    rows = cursor.fetchall()
+    ret = []
+    for row in rows:
+        tmp = {
+            'id' : row[0],
+            'symbol' : row[3],
+            'description' : row[4],
+            'last' : row[8],
+            'netchg' : row[22],
+            'bid' : row[6],
+            'ask' : row[7],
+            'volume' : row[18],
+            'openinterest' : row[29],
+            'pcratio' : 'N/A'
+        }
+        ret.append(tmp)
+    connection.commit()
+    return ret
