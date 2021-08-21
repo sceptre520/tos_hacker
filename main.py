@@ -210,18 +210,9 @@ class App(QWidget):
         self.mainLayout.addWidget(exportBtn, 6, 12, 1, 1)
 
     def createTable(self):
-       # Create table
         self.tableWidget = QTableWidget()
         self.tableWidget.setColumnCount(9)
         self.tableWidget.setHorizontalHeaderLabels(["Symbol", "Description", "Last", "Net Change", "Bid", "Ask", "Volume", "Open Interest", "P/C Ratio"])
-        # self.tableWidget.setItem(0,0, QTableWidgetItem("Cell (1,1)"))
-        # self.tableWidget.setItem(0,1, QTableWidgetItem("Cell (1,2)"))
-        # self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
-        # self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
-        # self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
-        # self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
-        # self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
-        # self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
 
     def changeFilterMeta(self, data, col):
         self.filterV[col] = data
